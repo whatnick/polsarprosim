@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+
 PROJECT(POLSARPROSIM)
 
-ADD_SUBDIRECTORY(polsarprosim)
+ADD_SUBDIRECTORY(PolSARproSIM)
