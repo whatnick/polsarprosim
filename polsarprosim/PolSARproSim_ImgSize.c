@@ -37,6 +37,7 @@
 #include <conio.h>
 #endif
 
+#include "Allometrics.h"
 /*******************************************/
 /*     PolSARpro ROUTINES DECLARATION      */
 /*******************************************/
@@ -59,7 +60,7 @@ void check_file(char *file);
 #define	POLSARPROSIM_DECIDUOUS001_CROWN_ALPHA		0.410
 #define	DPI_RAD										3.14159265358979
 #define	DPI_DEG										180.0
-
+/*
 double		Mean_Crown_Edge_Length			(int species, double height)
 {
  double		R;
@@ -107,7 +108,7 @@ double		Mean_Tree_Crown_Radius				(int species, double height)
  double	a	= Mean_Crown_Edge_Length (species, height)*sin(Mean_Crown_Angle_Beta (species, height));
  return (a);
 }
-
+*/
 void Image_Size_Calculation (int spc, double mth, double thi, double azr, double grr, double fsa, int *pNazimuth, int *pNrange, double *LLx, double *LLy, double *Ddeltax, double *Ddeltay)
 {
 /*********************************************/
