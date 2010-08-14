@@ -1,0 +1,75 @@
+
+************************************************************************
+*                                                                      *
+* PolSARproSim Version C1b  Forest Synthetic Aperture Radar Simulation *
+* Copyright (C) 2007 Mark L. Williams (mark.williams@physics.org)      *
+*                                                                      *
+* PolSARproSim Version C1b  is free software; you may redistribute it  *
+* and/or modify it under the terms of the GNU General Public License   *
+* as published by the Free Software Foundation; either version 2       *
+* of the License, or (at your option) any later version.               *
+*                                                                      *
+* PolSARproSim Version C1b  is distributed in the hope that it will be *
+* useful,but WITHOUT ANY WARRANTY; without even the implied warranty   *
+* of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.              *
+* See the GNU General Public License for more details.                 *
+*                                                                      *
+* You should have received a copy of the GNU General Public License    *
+* along with this program; if not, write to the Free Software          *
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,           *
+* MA  02110-1301, USA. (http://www.gnu.org/copyleft/gpl.html)          *
+*                                                                      *
+************************************************************************
+
+
+Reading parameters from file C:\Program Files (x86)\PolSARpro_v4.1.5\track_master\pspsim_config.sar.
+
+Input parameter report ...
+
+2			/* The number of requested tracks 	*/
+4242.640600		/* Slant range (broadside platform to scene centre) in metres 	*/
+45.000000		/* Incidence angle in degrees 	*/
+4250.423600		/* Slant range (broadside platform to scene centre) in metres 	*/
+45.085800		/* Incidence angle in degrees 	*/
+1.300000		/* Centre frequency in GHz 	*/
+1.500000		/* Azimuth resolution (width at half-height power) in metres 	*/
+1.060700		/* Slant range resolution (width at half-height power) in metres 	*/
+0			/* Ground model: 0 = smoothest … 10 = roughest 	*/
+0.020000		/* Ground slope in azimuth direction (dimensionless) 	*/
+0.010000		/* Ground slope in ground range direction (dimensionless) 	*/
+43790			/* Random number generator seed 	*/
+4			/* Tree species: 0 = HEDGE, 1,2,3 = PINE, 4 = DECIDUOUS 	*/
+18.000000		/* Mean tree height in metres 	*/
+2827.450000		/* Area of the forest stand in square metres 	*/
+300			/* Desired stand density in stems per hectare 	*/
+1			/* Ground moisture content model: 0 = dry ... 10  = wet 	*/
+
+
+Requested stand density of 300 Trees/Ha is too great.
+Resetting stand density to 66 Trees/Ha.
+
+Derived parameter values ...
+
+Wavelength				=	0.230610 metres
+Wavenumber				=	27.245985 inv. metres
+Azimuth resolution		=	1.500000 metres
+Ground range resolution[0]	=	1.500056 metres
+Ground range resolution[1]	=	1.497815 metres
+Large-scale height stdev	=	0.004762 metres
+Large-scale length		=	7.690180 metres
+Small-scale height stdev	=	0.003114 metres
+Small-scale length		=	0.025773 metres
+Layover distance			=	18.000000 metres
+Shadow distance			=	18.000000 metres
+Gap distance			=	15.000282 metres
+Stand radius			=	30.000088 metres
+Lx					=	104.760740 metres
+Ly					=	140.760740 metres
+Area					=	14746.199166 square metres
+Hectares				=	1.474620 Ha
+There are 105 pixels in azimuth of width 0.997721 metres
+There are 141 pixels in ground range of width 0.998303 metres
+Deciduous forest simulation
+
+*******************************************************************
+
