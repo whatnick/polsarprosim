@@ -323,11 +323,15 @@ int main(int argv, char *argc[])
 #endif
   /***********************************************/
   /* Calculate the short vegetation contribution */
+  /* Commented in Direct Ground Code			 */
   /***********************************************/
   PolSARproSim_Short_Vegetation_Direct	(&Master_Record);
   PolSARproSim_Short_Vegetation_Bounce	(&Master_Record);
   /*************************************/
   /* Calculate the volume contribution */
+  /* These lines are commented in the  */
+  /* Short Vegetation and Direct Ground*/
+  /* code                              */
   /*************************************/
   PolSARproSim_Forest_Direct			(&Master_Record);
   PolSARproSim_Forest_Bounce			(&Master_Record);
