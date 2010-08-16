@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 	gr_resolution = atof(argv[6]);
 	forest_stand_area = atof(argv[7]);
     } else {
-	edit_error("PolSARproSimGV_ImgSize config_file species mean_tree_height (m) incidence_angle (deg) az_resolution (m) rg_resolution (m) forest_stand_area (Ha)\n","");
+	edit_error("PolSARproSimGR_ImgSize config_file species mean_tree_height (m) incidence_angle (deg) az_resolution (m) rg_resolution (m) forest_stand_area (Ha)\n","");
     }
 
     check_file(FileOutput);
