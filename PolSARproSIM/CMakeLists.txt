@@ -42,7 +42,7 @@ soilsurface.c
 
 SET(LIB_SRC ../lib/matrix.c ../lib/util.c)
 
-SET(PPS_SRC PolsarProSim.c)
+SET(PPS_SRC PolSARproSim.c)
 SET(PPS_FE_KZ_SRC PolSARproSim_FE_Kz.c)
 SET(PPS_ImgSize_SRC PolSARproSim_ImgSize.c)
 SET(PPS_ImgSizeSV_SRC PolSARproSimSV_ImgSize.c)
