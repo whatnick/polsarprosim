@@ -67,3 +67,18 @@ TARGET_LINK_LIBRARIES(PolSARproSimSV_ImgSize ${M_LIB})
 TARGET_LINK_LIBRARIES(PolSARproSimGR_ImgSize ${M_LIB})
 ENDIF(UNIX)
 
+SET(master_dir ${PolsarProSimTests_BINARY_DIR}/master)
+SET(slave_dir ${PolsarProSimTests_BINARY_DIR}/slave)
+SET(prefix_path ${POLSARPROSIM_SOURCE_DIR}/track_master/pspsim_config)
+
+FILE(MAKE_DIRECTORY ${master_dir})
+FILE(MAKE_DIRECTORY ${slave_dir})
+
+MESSAGE(STATUS "--------------")
+MESSAGE(STATUS "master_dir=${master_dir}")
+MESSAGE(STATUS "slave_dir=${slave_dir}")
+MESSAGE(STATUS "prefix_path=${prefix_path}")
+MESSAGE(STATUS "--------------")
+
+ADD_TEST(runSim PolSARproSim ${prefix_path} ${master_dir} ${slave_dir})
+
