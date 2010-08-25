@@ -80,5 +80,7 @@ MESSAGE(STATUS "slave_dir=${slave_dir}")
 MESSAGE(STATUS "prefix_path=${prefix_path}")
 MESSAGE(STATUS "--------------")
 
+IF(BUILD_TESTING)
 ADD_TEST(runSim PolSARproSim ${prefix_path} ${master_dir} ${slave_dir})
+ENDIF(BUILD_TESTING)
 
