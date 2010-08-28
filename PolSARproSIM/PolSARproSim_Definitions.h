@@ -248,10 +248,17 @@
 /* Ground surface description controls */
 /***************************************/
 
-#define	DEFAULT_GROUND_MV						0.25				/* Default soil volumetric warer content						*/
+#define	DEFAULT_GROUND_MV						0.25				/* Default soil volumetric water content						*/
 #define	INPUT_GROUND_MV												/* Read soil moisture model from input file if #defined			*/
 #define	MIN_GROUND_MV							0.1					/* Minimum permissible soil moisture value						*/
 #define	MAX_GROUND_MV							0.3					/* Maximum permissible soil moisture value						*/
+
+/**********************************************************/
+/* Definitions for full forest, short veg and ground only */
+/**********************************************************/
+#define SV_DG_ENABLED 0 /*Compile with Short-veg or Direct-ground selection*/
+#define SV_ONLY       0 /*Enable short vegetation*/
+#define DG_ONLY       0 /*Enable direct ground*/
 
 /******************************/
 /* Attenuation and scattering */

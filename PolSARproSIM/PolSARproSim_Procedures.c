@@ -749,6 +749,10 @@ int		Input_PolSARproSim_Record		(const char *filename, PolSARproSim_Record *pPR)
  fscanf (pInputFile, "%lf", &(pPR->mean_tree_height));			EndOfLine (pInputFile);
  fscanf (pInputFile, "%lf", &(pPR->Stand_Area));				EndOfLine (pInputFile);
  fscanf (pInputFile, "%d",  &(pPR->req_trees_per_hectare));		EndOfLine (pInputFile);
+#ifdef SV_DG_ENABLED
+ fscanf (pInputFile, "%d",  &(pPR->svEnabled));		EndOfLine (pInputFile);
+ fscanf (pInputFile, "%d",  &(pPR->dgEnabled));		EndOfLine (pInputFile);
+#endif
 #ifdef INPUT_GROUND_MV
  fscanf (pInputFile, "%d",  &GMV_model);						EndOfLine (pInputFile);
 #endif

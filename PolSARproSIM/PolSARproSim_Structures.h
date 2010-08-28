@@ -118,6 +118,11 @@ typedef struct polsarprosim_record_tag {
  double			*ground_range_resolution;	/* Width at half height power of PSF in ground range in metres	*/
  double			f_azimuth;					/* Azimuth sampling frequency (ratio < 1.0)						*/
  double			f_ground_range;				/* Ground range sampling frequency (ratio < 1.0)				*/
+/***************************************************/
+/* Variable governing Direct Ground, Short Veg sim */
+/***************************************************/
+ int dgEnabled; /*Direct ground simulation enabled*/
+ int svEnabled; /*Short vegetation simulation enabled*/
 /**************************************************/
 /* Variables governing large-scale ground surface */
 /**************************************************/
