@@ -119,10 +119,11 @@ typedef struct polsarprosim_record_tag {
  double			f_azimuth;					/* Azimuth sampling frequency (ratio < 1.0)						*/
  double			f_ground_range;				/* Ground range sampling frequency (ratio < 1.0)				*/
 /***************************************************/
-/* Variable governing Direct Ground, Short Veg sim */
+/* Variable governing Direct Ground,               */
+/* Forest, Short Veg sim                           */
 /***************************************************/
- int dgEnabled; /*Direct ground simulation enabled*/
- int svEnabled; /*Short vegetation simulation enabled*/
+ int svEnabled; /*Short Vegetation simulation Enabled*/
+ int fEnabled; /*Forest simulation Enabled           */
 /**************************************************/
 /* Variables governing large-scale ground surface */
 /**************************************************/

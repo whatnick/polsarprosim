@@ -257,8 +257,8 @@
 /* Definitions for full forest, short veg and ground only */
 /**********************************************************/
 #define SV_DG_ENABLED 0 /*Compile with Short-veg or Direct-ground selection*/
-#define SV_ONLY       0 /*Enable short vegetation*/
-#define DG_ONLY       0 /*Enable direct ground*/
+#define SV_ENABLED       1 /*Enable short vegetation*/
+#define DG_ENABLED       1 /*Enable direct ground*/
 
 /******************************/
 /* Attenuation and scattering */

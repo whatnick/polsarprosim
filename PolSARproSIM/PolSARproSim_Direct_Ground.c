@@ -292,14 +292,18 @@ int		PolSARproSim_Direct_Ground		(PolSARproSim_Record *pPR)
     Shv				= complex_rmul	(complex_sub  (Shhl, Svvl),  cosb*sinb);
 	Svh				= Shv;
 #ifdef SWITCH_ATTENUATION_ON
-	/***********************************/
-	/* Incorporate attenuation effects */
-	/***********************************/
-	rtn_lookup		= Lookup_Direct_Attenuation (f1.r[3], pPR, &gH, &gV);
-	Shh				= complex_rmul (Shh, gH*gH);
-	Shv				= complex_rmul (Shv, gH*gV);
-	Svh				= complex_rmul (Svh, gV*gH);
-	Svv				= complex_rmul (Svv, gV*gV);
+	/***********************************************/
+	/* Incorporate attenuation effects			   */
+	/* If both SV and F are disabled no attenuation*/
+	/***********************************************/
+	if(pPR->svEnabled || pPR->fEnabled)
+	{
+		rtn_lookup		= Lookup_Direct_Attenuation (f1.r[3], pPR, &gH, &gV);
+		Shh				= complex_rmul (Shh, gH*gH);
+		Shv				= complex_rmul (Shv, gH*gV);
+		Svh				= complex_rmul (Svh, gV*gH);
+		Svv				= complex_rmul (Svv, gV*gV);
+	}
 #endif
 	/**************************************/
 	/* Monitor backscattering coefficient */

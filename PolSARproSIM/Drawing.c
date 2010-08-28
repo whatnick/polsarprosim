@@ -1803,7 +1803,8 @@ void		Forest_Graphic					(PolSARproSim_Record *pPR)
 /************************/
 /* Rendering the forest */
 /************************/
-
+ if(pPR->fEnabled)
+ {
 #ifdef VERBOSE_POLSARPROSIM
  printf ("\nDrawing the forest ...\n");
 #endif
@@ -1830,7 +1831,7 @@ void		Forest_Graphic					(PolSARproSim_Record *pPR)
 #endif
  fprintf (pPR->pLogFile, "... finished drawing the forest.\n");
  fflush  (pPR->pLogFile);
-
+}
 /**********************************/
 /* Rendering the short vegetation */
 /**********************************/

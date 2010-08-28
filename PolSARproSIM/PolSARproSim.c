@@ -277,18 +277,20 @@ int main(int argv, char *argc[])
 /*************************************************************/
 /* Stage 2: Calculate the electrical proprties of the forest */
 /*************************************************************/
-
+ if((&Master_Record)->svEnabled||(&Master_Record)->fEnabled)
+ {
 /*****************************************************/
 /* Calculate the vegetation effective permittivities */
 /*****************************************************/
 
- Effective_Permittivities		(&Master_Record);
+	Effective_Permittivities		(&Master_Record);
 
 /***************************************************/
 /* Calculate the spatial attenuation look-up table */
 /***************************************************/
 
- Attenuation_Map				(&Master_Record);
+	Attenuation_Map				(&Master_Record);
+ }
 
 /*****************************************************/
 /* Stage 3: Calculate the interferometric SAR images */
@@ -325,16 +327,23 @@ int main(int argv, char *argc[])
   /* Calculate the short vegetation contribution */
   /* Commented in Direct Ground Code			 */
   /***********************************************/
+
+if((&Master_Record)->svEnabled)
+{
   PolSARproSim_Short_Vegetation_Direct	(&Master_Record);
   PolSARproSim_Short_Vegetation_Bounce	(&Master_Record);
+}
   /*************************************/
   /* Calculate the volume contribution */
   /* These lines are commented in the  */
   /* Short Vegetation and Direct Ground*/
   /* code                              */
   /*************************************/
+if((&Master_Record)->fEnabled)
+{
   PolSARproSim_Forest_Direct			(&Master_Record);
   PolSARproSim_Forest_Bounce			(&Master_Record);
+}
   /****************************************/
   /* Optional flat earth phase correction */
   /****************************************/
