@@ -1834,8 +1834,11 @@ void		Forest_Graphic					(PolSARproSim_Record *pPR)
 }
 /**********************************/
 /* Rendering the short vegetation */
+/* Only if forest is disabled     */
 /**********************************/
 
+if(pPR->svEnabled && !pPR->fEnabled)
+{
 #ifdef FOREST_GRAPHIC_DRAW_SHORTV_SURFACE
 #ifdef VERBOSE_POLSARPROSIM
  printf ("\nDrawing the short vegetation surface ...\n");
@@ -1911,6 +1914,7 @@ void		Forest_Graphic					(PolSARproSim_Record *pPR)
  fprintf (pPR->pLogFile, "Finished drawing the short vegetation surface ...\n");
  fflush  (pPR->pLogFile);
 #endif
+}
 
 /****************************/
 /* Write to a GRI file type */

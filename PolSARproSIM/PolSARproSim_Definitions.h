@@ -343,7 +343,7 @@
 
 /*#define	FOREST_GRAPHIC_DRAW_SHORTV_ELEMENTS					*/
 /* Draw a few leaves and stems in the understorey				*/
-/*#define	FOREST_GRAPHIC_DRAW_SHORTV_SURFACE					*/
+#define	FOREST_GRAPHIC_DRAW_SHORTV_SURFACE					/*/
 /* Draw the surface of the short vegetation layer				*/
 /*#define	FOREST_GRAPHIC_DRAW_PRIMARY							*/
 /* Draw primary branches in graphic image if defined			*/
