@@ -2314,6 +2314,8 @@ int			Lookup_Bounce_Attenuation		(d3Vector r, PolSARproSim_Record *pPR, double *
 
 void		Attenuation_Map					(PolSARproSim_Record *pPR)
 {
+//TODO: Disable crown attenuation in SV mode
+//TODO: Read the procedures file in SV case
  double		GshortH		= fabs (cos(pPR->incidence_angle[0])*pPR->koz_short.y);
  double		GshortV		= fabs (cos(pPR->incidence_angle[0])*pPR->kez_short.y);
  double		GdryH		= fabs (cos(pPR->incidence_angle[0])*pPR->koz_dry.y);
@@ -2473,93 +2475,95 @@ void		Attenuation_Map					(PolSARproSim_Record *pPR)
 	/* Short veggie contribution */
 	/*****************************/
 	if (zed < pPR->shrt_vegi_depth) {
-     GammaH	*= exp(-fabs(pPR->koz_short.y)*zed);
-     GammaV	*= exp(-fabs(pPR->kez_short.y)*zed);
+		GammaH	*= exp(-fabs(pPR->koz_short.y)*zed);
+		GammaV	*= exp(-fabs(pPR->kez_short.y)*zed);
 	} else {
-     GammaH	*= exp(-fabs(pPR->koz_short.y)*pPR->shrt_vegi_depth);
-     GammaV	*= exp(-fabs(pPR->kez_short.y)*pPR->shrt_vegi_depth);
-	 /*****************************/
-	 /* Living crown contribution */
-	 /*****************************/
-	 for (itree=0; itree<pPR->Trees; itree++) {
-	  if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
- 	   if (y > (pPR->Tree_Location[itree].y - Cr)) {
-	    /***********************************************/
-	    /* Look for ray intersection with living crown */
-	    /***********************************************/
-	    Realise_Tree_Crown_Only (&tree1, itree, pPR);
-	    pC			= tree1.CrownVolume.head;
-	    rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
-        /**********************************************************************/
-        /* Additional check for solution above crown apex for conical crowns  */
-        /**********************************************************************/
-	    if ((rtn_value == NO_RAYCROWN_ERRORS) && (pC->shape == CROWN_CONE)) {
-         f1	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa1, pC->base));
-         f2	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa2, pC->base));
-         if ((f1 > pC->d3) || (f2 > pC->d3)) {
-          rtn_value = !NO_RAYCROWN_ERRORS;
-         }
-        }
-	    path_length	= 0.0;
-	    if (rtn_value == NO_RAYCROWN_ERRORS) {
-	     if (alpha1 >= 0.0) {
-	      if (alpha2 >= 0.0) {
-		   path_length	= fabs(alpha1 - alpha2);
-		  } else {
-		   path_length	= fabs(alpha1);
-		  }
-		 } else {
-	      if (alpha2 >= 0.0) {
-		   path_length	= fabs(alpha2);
-		  } else {
-		   path_length	= 0.0;
-		  }
-		 }
-        }
-        GammaH	*= exp(-fabs(pPR->koz_living.y)*cos_theta*path_length);
-        GammaV	*= exp(-fabs(pPR->kez_living.y)*cos_theta*path_length);
-	   }
-	  }
-	 }
-	 /**************************************/
-	 /* Dry crown contribution if required */
-	 /**************************************/
-	 if (pPR->species != POLSARPROSIM_DECIDUOUS001) {
-      if (pPR->species != POLSARPROSIM_NULL_SPECIES) {
-       if (pPR->species != POLSARPROSIM_HEDGE) {
-	    for (itree=0; itree<pPR->Trees; itree++) {
-	     if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
- 	      if (y > (pPR->Tree_Location[itree].y - Cr)) {
-	       /***********************************************/
-	       /* Look for ray intersection with living crown */
-	       /***********************************************/
-	       Realise_Tree_Crown_Only (&tree1, itree, pPR);
-		   pC			= tree1.CrownVolume.tail;
-	       rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
-	       path_length	= 0.0;
-	       if (rtn_value == NO_RAYCROWN_ERRORS) {
-	        if (alpha1 >= 0.0) {
-	         if (alpha2 >= 0.0) {
-		      path_length	= fabs(alpha1 - alpha2);
-		     } else {
-		      path_length	= fabs(alpha1);
-		     }
-		    } else {
-	         if (alpha2 >= 0.0) {
-		      path_length	= fabs(alpha2);
-		     } else {
-		      path_length	= 0.0;
-		     }
-		    }
-           }
-           GammaH	*= exp(-fabs(pPR->koz_dry.y)*cos_theta*path_length);
-           GammaV	*= exp(-fabs(pPR->kez_dry.y)*cos_theta*path_length);
-	      }
-	     }
-	    }
-	   }
-	  }
-	 }
+		GammaH	*= exp(-fabs(pPR->koz_short.y)*pPR->shrt_vegi_depth);
+		GammaV	*= exp(-fabs(pPR->kez_short.y)*pPR->shrt_vegi_depth);
+		if(pPR->fEnabled) {
+		/*****************************/
+		/* Living crown contribution */
+		/*****************************/
+			for (itree=0; itree<pPR->Trees; itree++) {
+				if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
+					if (y > (pPR->Tree_Location[itree].y - Cr)) {
+						/***********************************************/
+						/* Look for ray intersection with living crown */
+						/***********************************************/
+						Realise_Tree_Crown_Only (&tree1, itree, pPR);
+						pC			= tree1.CrownVolume.head;
+						rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
+						/**********************************************************************/
+						/* Additional check for solution above crown apex for conical crowns  */
+						/**********************************************************************/
+						if ((rtn_value == NO_RAYCROWN_ERRORS) && (pC->shape == CROWN_CONE)) {
+							f1	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa1, pC->base));
+							f2	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa2, pC->base));
+							if ((f1 > pC->d3) || (f2 > pC->d3)) {
+								rtn_value = !NO_RAYCROWN_ERRORS;
+							}
+						}
+						path_length	= 0.0;
+						if (rtn_value == NO_RAYCROWN_ERRORS) {
+							if (alpha1 >= 0.0) {
+								if (alpha2 >= 0.0) {
+									path_length	= fabs(alpha1 - alpha2);
+								} else {
+									path_length	= fabs(alpha1);
+								}
+							} else {
+								if (alpha2 >= 0.0) {
+									path_length	= fabs(alpha2);
+								} else {
+									path_length	= 0.0;
+								}
+							}
+						}
+						GammaH	*= exp(-fabs(pPR->koz_living.y)*cos_theta*path_length);
+						GammaV	*= exp(-fabs(pPR->kez_living.y)*cos_theta*path_length);
+					}
+				}
+			}
+			/**************************************/
+			/* Dry crown contribution if required */
+			/**************************************/
+			if (pPR->species != POLSARPROSIM_DECIDUOUS001) {
+				if (pPR->species != POLSARPROSIM_NULL_SPECIES) {
+					if (pPR->species != POLSARPROSIM_HEDGE) {
+						for (itree=0; itree<pPR->Trees; itree++) {
+							if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
+								if (y > (pPR->Tree_Location[itree].y - Cr)) {
+									/***********************************************/
+									/* Look for ray intersection with living crown */
+									/***********************************************/
+									Realise_Tree_Crown_Only (&tree1, itree, pPR);
+									pC			= tree1.CrownVolume.tail;
+									rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
+									path_length	= 0.0;
+									if (rtn_value == NO_RAYCROWN_ERRORS) {
+										if (alpha1 >= 0.0) {
+											if (alpha2 >= 0.0) {
+												path_length	= fabs(alpha1 - alpha2);
+											} else {
+												path_length	= fabs(alpha1);
+											}
+										} else {
+											if (alpha2 >= 0.0) {
+												path_length	= fabs(alpha2);
+											} else {
+												path_length	= 0.0;
+											}
+										}
+									}
+									GammaH	*= exp(-fabs(pPR->koz_dry.y)*cos_theta*path_length);
+									GammaV	*= exp(-fabs(pPR->kez_dry.y)*cos_theta*path_length);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
     /******************************************************/
 	/* Store the attenuation factors in the look-up table */
@@ -2620,87 +2624,89 @@ void		Attenuation_Map					(PolSARproSim_Record *pPR)
      GammaH	*= exp(-fabs(pPR->koz_short.y)*(pPR->shrt_vegi_depth-zed));
      GammaV	*= exp(-fabs(pPR->kez_short.y)*(pPR->shrt_vegi_depth-zed));
 	}
-	/*****************************/
-	/* Living crown contribution */
-	/*****************************/
-	for (itree=0; itree<pPR->Trees; itree++) {
-	 if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
- 	  if (y > (pPR->Tree_Location[itree].y - Cr)) {
-	   /***********************************************/
-	   /* Look for ray intersection with living crown */
-	   /***********************************************/
-	   Realise_Tree_Crown_Only (&tree1, itree, pPR);
-	   pC			= tree1.CrownVolume.head;
-	   rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
-       /**********************************************************************/
-       /* Additional check for solution above crown apex for conical crowns  */
-       /**********************************************************************/
-	   if ((rtn_value == NO_RAYCROWN_ERRORS) && (pC->shape == CROWN_CONE)) {
-        f1	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa1, pC->base));
-        f2	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa2, pC->base));
-        if ((f1 > pC->d3) || (f2 > pC->d3)) {
-         rtn_value = !NO_RAYCROWN_ERRORS;
-        }
-       }
-	   path_length	= 0.0;
-	   if (rtn_value == NO_RAYCROWN_ERRORS) {
-	    if (alpha1 >= 0.0) {
-	     if (alpha2 >= 0.0) {
-		  path_length	= fabs(alpha1 - alpha2);
-		 } else {
-		  path_length	= fabs(alpha1);
-		 }
-		} else {
-	     if (alpha2 >= 0.0) {
-		  path_length	= fabs(alpha2);
-		 } else {
-		  path_length	= 0.0;
-		 }
+	if(pPR->fEnabled) {
+		/*****************************/
+		/* Living crown contribution */
+		/*****************************/
+		for (itree=0; itree<pPR->Trees; itree++) {
+			if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
+				if (y > (pPR->Tree_Location[itree].y - Cr)) {
+					/***********************************************/
+					/* Look for ray intersection with living crown */
+					/***********************************************/
+					Realise_Tree_Crown_Only (&tree1, itree, pPR);
+					pC			= tree1.CrownVolume.head;
+					rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
+					/**********************************************************************/
+					/* Additional check for solution above crown apex for conical crowns  */
+					/**********************************************************************/
+					if ((rtn_value == NO_RAYCROWN_ERRORS) && (pC->shape == CROWN_CONE)) {
+						f1	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa1, pC->base));
+						f2	= d3Vector_scalar_product (pC->axis, d3Vector_difference (sa2, pC->base));
+						if ((f1 > pC->d3) || (f2 > pC->d3)) {
+							rtn_value = !NO_RAYCROWN_ERRORS;
+						}
+					}
+					path_length	= 0.0;
+					if (rtn_value == NO_RAYCROWN_ERRORS) {
+						if (alpha1 >= 0.0) {
+							if (alpha2 >= 0.0) {
+								path_length	= fabs(alpha1 - alpha2);
+							} else {
+								path_length	= fabs(alpha1);
+							}
+						} else {
+							if (alpha2 >= 0.0) {
+								path_length	= fabs(alpha2);
+							} else {
+								path_length	= 0.0;
+							}
+						}
+					}
+					GammaH	*= exp(-fabs(pPR->koz_living.y)*cos_theta*path_length);
+					GammaV	*= exp(-fabs(pPR->kez_living.y)*cos_theta*path_length);
+				}
+			}
 		}
-       }
-       GammaH	*= exp(-fabs(pPR->koz_living.y)*cos_theta*path_length);
-       GammaV	*= exp(-fabs(pPR->kez_living.y)*cos_theta*path_length);
-	  }
-	 }
-	}
-	/**************************************/
-	/* Dry crown contribution if required */
-	/**************************************/
-	if (pPR->species != POLSARPROSIM_DECIDUOUS001) {
-     if (pPR->species != POLSARPROSIM_NULL_SPECIES) {
-      if (pPR->species != POLSARPROSIM_HEDGE) {
-	   for (itree=0; itree<pPR->Trees; itree++) {
-	    if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
- 	     if (y > (pPR->Tree_Location[itree].y - Cr)) {
-	      /***********************************************/
-	      /* Look for ray intersection with living crown */
-	      /***********************************************/
-	      Realise_Tree_Crown_Only (&tree1, itree, pPR);
-		  pC			= tree1.CrownVolume.tail;
-	      rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
-	      path_length	= 0.0;
-	      if (rtn_value == NO_RAYCROWN_ERRORS) {
-	       if (alpha1 >= 0.0) {
-	        if (alpha2 >= 0.0) {
-		     path_length	= fabs(alpha1 - alpha2);
-		    } else {
-		     path_length	= fabs(alpha1);
-		    }
-		    } else {
-	        if (alpha2 >= 0.0) {
-		     path_length	= fabs(alpha2);
-		    } else {
-		     path_length	= 0.0;
-		    }
-		   }
-          }
-          GammaH	*= exp(-fabs(pPR->koz_dry.y)*cos_theta*path_length);
-          GammaV	*= exp(-fabs(pPR->kez_dry.y)*cos_theta*path_length);
-	     }
-	    }
-	   }
-	  }
-	 }
+		/**************************************/
+		/* Dry crown contribution if required */
+		/**************************************/
+		if (pPR->species != POLSARPROSIM_DECIDUOUS001) {
+			if (pPR->species != POLSARPROSIM_NULL_SPECIES) {
+				if (pPR->species != POLSARPROSIM_HEDGE) {
+					for (itree=0; itree<pPR->Trees; itree++) {
+						if (fabs (x-pPR->Tree_Location[itree].x) <= Cr) {
+							if (y > (pPR->Tree_Location[itree].y - Cr)) {
+								/***********************************************/
+								/* Look for ray intersection with living crown */
+								/***********************************************/
+								Realise_Tree_Crown_Only (&tree1, itree, pPR);
+								pC			= tree1.CrownVolume.tail;
+								rtn_value	= RayCrownIntersection (&ray1, pC, &sa1, &alpha1, &sa2, &alpha2);
+								path_length	= 0.0;
+								if (rtn_value == NO_RAYCROWN_ERRORS) {
+									if (alpha1 >= 0.0) {
+										if (alpha2 >= 0.0) {
+											path_length	= fabs(alpha1 - alpha2);
+										} else {
+											path_length	= fabs(alpha1);
+										}
+									} else {
+										if (alpha2 >= 0.0) {
+											path_length	= fabs(alpha2);
+										} else {
+											path_length	= 0.0;
+										}
+									}
+								}
+								GammaH	*= exp(-fabs(pPR->koz_dry.y)*cos_theta*path_length);
+								GammaV	*= exp(-fabs(pPR->kez_dry.y)*cos_theta*path_length);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	/******************************************************/
 	/* Store the attenuation factors in the look-up table */
