@@ -67,6 +67,13 @@ TARGET_LINK_LIBRARIES(PolSARproSimSV_ImgSize ${M_LIB})
 TARGET_LINK_LIBRARIES(PolSARproSimGR_ImgSize ${M_LIB})
 ENDIF(UNIX)
 
+
+
+
+IF(BUILD_TESTING)
+
+#Change this to loop over all .SAR files in track_master
+
 SET(master_dir ${POLSARPROSIM_BINARY_DIR}/master)
 SET(slave_dir ${POLSARPROSIM_BINARY_DIR}/slave)
 SET(prefix_path ${POLSARPROSIM_SOURCE_DIR}/track_master/pspsim_config)
@@ -74,13 +81,41 @@ SET(prefix_path ${POLSARPROSIM_SOURCE_DIR}/track_master/pspsim_config)
 FILE(MAKE_DIRECTORY ${master_dir})
 FILE(MAKE_DIRECTORY ${slave_dir})
 
-MESSAGE(STATUS "--------------")
-MESSAGE(STATUS "master_dir=${master_dir}")
-MESSAGE(STATUS "slave_dir=${slave_dir}")
-MESSAGE(STATUS "prefix_path=${prefix_path}")
-MESSAGE(STATUS "--------------")
+FILE(MAKE_DIRECTORY ${master_dir}_decid_hr)
+FILE(MAKE_DIRECTORY ${slave_dir}_decid_hr)
 
-IF(BUILD_TESTING)
-ADD_TEST(runSim PolSARproSim ${prefix_path} ${master_dir} ${slave_dir})
+
+FILE(MAKE_DIRECTORY ${master_dir}_pine)
+FILE(MAKE_DIRECTORY ${slave_dir}_pine)
+
+FILE(MAKE_DIRECTORY ${master_dir}_pine_hr)
+FILE(MAKE_DIRECTORY ${slave_dir}_pine_hr)
+
+FILE(MAKE_DIRECTORY ${master_dir}_dg)
+FILE(MAKE_DIRECTORY ${slave_dir}_dg)
+
+FILE(MAKE_DIRECTORY ${master_dir}_dg_hr)
+FILE(MAKE_DIRECTORY ${slave_dir}_dg_hr)
+
+FILE(MAKE_DIRECTORY ${master_dir}_sv)
+FILE(MAKE_DIRECTORY ${slave_dir}_sv)
+
+FILE(MAKE_DIRECTORY ${master_dir}_sv_hr)
+FILE(MAKE_DIRECTORY ${slave_dir}_sv_hr)
+
+
+ADD_TEST(decid_fast_Sim PolSARproSim ${prefix_path} ${master_dir} ${slave_dir})
+#ADD_TEST(decid_slow_Sim PolSARproSim ${prefix_path}_decid_hr ${master_dir}_decid_hr ${slave_dir}_decid_hr)
+
+
+ADD_TEST(pine_fast_Sim PolSARproSim ${prefix_path}_pine ${master_dir}_pine ${slave_dir}_pine)
+#ADD_TEST(pine_slow_Sim PolSARproSim ${prefix_path}_pine_hr ${master_dir}_pine_hr ${slave_dir}_pine_hr)
+
+ADD_TEST(ground_fast_Sim PolSARproSim ${prefix_path}_dg ${master_dir}_dg ${slave_dir}_dg )
+#ADD_TEST(ground_slow_Sim PolSARproSim ${prefix_path}_dg_hr ${master_dir}_dg_hr ${slave_dir}_dg_hr )
+
+ADD_TEST(shortveg_fast_Sim PolSARproSim ${prefix_path}_sv ${master_dir}_sv ${slave_dir}_sv )
+#ADD_TEST(shortveg_slow_Sim PolSARproSim ${prefix_path}_sv_hr ${master_dir}_sv_hr ${slave_dir}_sv_hr )
+
 ENDIF(BUILD_TESTING)
 

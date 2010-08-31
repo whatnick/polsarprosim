@@ -1,0 +1,19 @@
+2           /* The number of requested tracks                                */
+4242.6406   /* Slant range (broadside platform to scene centre) in metres    */
+45.0000     /* Incidence angle in degrees                                    */
+4250.4236   /* Slant range (broadside platform to scene centre) in metres    */
+45.0858     /* Incidence angle in degrees                                    */
+1.3000      /* Centre frequency in GHz                                       */
+150.00      /* Azimuth resolution (width at half-height power) in metres     */
+106.07      /* Slant range resolution (width at half-height power) in metres */
+0           /* DEM model: 0 = perfectly smooth … 10 = very rough             */
+0.0200      /* Ground slope in azimuth direction (dimensionless)             */
+0.0100      /* Ground slope in ground range direction (dimensionless)        */
+43790       /* Random number generator seed                                  */
+4           /* Tree species: 0 = HEDGE, 1,2,3 = PINE, 4 = DECIDUOUS          */
+18.0000     /* Mean tree height in metres                                    */
+2827.4500   /* Area of the forest stand in square metres                     */
+60.0000    /* Desired stand density in stems per hectare                    */
+1	     /* Set to 0 if Short Vegetation Simulation is disabled */
+0	     /* Set to 0 if Forest simulation is disabled */
+1           /* Ground moisture content model: 0 = driest ... 10  = wettest   */
