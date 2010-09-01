@@ -124,7 +124,8 @@ int		PolSARproSim_Short_Vegetation_Direct		(PolSARproSim_Record *pPR)
 /* Assign stem variables */
 /*************************/
  stem_species		= POLSARPROSIM_PINE_NEEDLE;
- stem_d1			= POLSARPROSIM_SHORTV_STEM_LENGTH;
+ //stem_d1			= POLSARPROSIM_SHORTV_STEM_LENGTH;
+ stem_d1			= pPR->shrt_vegi_depth;
  stem_d2			= POLSARPROSIM_SHORTV_STEM_RADIUS;
  stem_d3			= POLSARPROSIM_SHORTV_STEM_RADIUS;
  stem_moisture		= Leaf_Moisture	(pPR->species);

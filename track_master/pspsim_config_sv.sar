@@ -16,4 +16,5 @@
 60.0000    /* Desired stand density in stems per hectare                    */
 1	     /* Set to 0 if Short Vegetation Simulation is disabled */
 0	     /* Set to 0 if Forest simulation is disabled */
+0.5	     /* Short Vegetation Depth in metres */
 1           /* Ground moisture content model: 0 = driest ... 10  = wettest   */

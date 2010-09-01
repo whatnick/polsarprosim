@@ -753,6 +753,9 @@ int		Input_PolSARproSim_Record		(const char *filename, PolSARproSim_Record *pPR)
  fscanf (pInputFile, "%d",  &(pPR->svEnabled));		EndOfLine (pInputFile);
  fscanf (pInputFile, "%d",  &(pPR->fEnabled));		EndOfLine (pInputFile);
 #endif
+#ifdef SV_DG_ENABLED /*Short vegetation depth user control */
+ fscanf (pInputFile, "%lf",  &(pPR->shrt_vegi_depth));		EndOfLine (pInputFile);
+#endif
 #ifdef INPUT_GROUND_MV
  fscanf (pInputFile, "%d",  &GMV_model);						EndOfLine (pInputFile);
 #endif
@@ -934,9 +937,10 @@ int		Input_PolSARproSim_Record		(const char *filename, PolSARproSim_Record *pPR)
 
 /***********************************************************/
 /* Short vegetation layer variables not under user control */
+/* Modified to put them under user control				   */
 /***********************************************************/
 
- pPR->shrt_vegi_depth			= DEFAULT_SHORT_VEGI_DEPTH;
+ //pPR->shrt_vegi_depth			= DEFAULT_SHORT_VEGI_DEPTH;
  pPR->shrt_vegi_stem_vol_frac	= DEFAULT_SHORT_VEGI_STEM_VOL_FRAC;
  pPR->shrt_vegi_leaf_vol_frac	= DEFAULT_SHORT_VEGI_LEAF_VOL_FRAC;
 
@@ -1789,7 +1793,8 @@ void		Effective_Permittivities	(PolSARproSim_Record *pPR)
  /* Realise a stem (needle) to find L values */
  /********************************************/
  stem_species		= POLSARPROSIM_PINE_NEEDLE;
- stem_d1			= POLSARPROSIM_SHORTV_STEM_LENGTH;
+ //stem_d1			= POLSARPROSIM_SHORTV_STEM_LENGTH;
+ stem_d1			= pPR->shrt_vegi_depth;
  stem_d2			= POLSARPROSIM_SHORTV_STEM_RADIUS;
  stem_d3			= POLSARPROSIM_SHORTV_STEM_RADIUS;
  stem_moisture		= Leaf_Moisture	(pPR->species);
